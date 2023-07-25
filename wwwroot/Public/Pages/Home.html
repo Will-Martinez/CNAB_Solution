@@ -3,13 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/Client/Public/Stylesheets/StyleSheet.css">
+    <link rel="stylesheet" href="/Public/Stylesheets/Bulma.css">
+    <link rel="stylesheet" href="/Public/Stylesheets/Home.css"/>
     <title>Home</title>
 </head>
 <body>
-    <button type="button" id="testButton" class="button">Clique</button>
-    <footer>
+    <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">
+                        Home
+                    </a>
+                    <div class="navbar-dropdown">
+                        <a class="navbar-item" href="/solution">
+                            Solution
+                        </a>
+                        <a class="navbar-item" href="/home">
+                            Home
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-image">
+                <figure class="image is-4by3">
+                    <img src="/Public/Images/eu.png">
+                </figure>
+            </div>
+            <div class="card-content">
+                <div class="media">
+                    <div class="media-left">
+                    </div>
+                </div>
+
+                <div class="content">
+                    <p>
+                        Olá, meu nome é Wilman Anderson de Oliveira Martinez e sou o autor por trás da solução para o desafio.net.
+                        Espero que gostem e que possamos nos ver em um futuro breve.
+                    </p>
+
+                    <p>
+                        E-mail: wilman817@gmail.com
+                        Linkedin: <a href="https://www.linkedin.com/in/wilman-martinez-0a9892190/">Will Martinez</a>
+                    </p>
+
+                    <p>
+                        Número de telefone: 19981948269
+                        Repositório: <a href="https://github.com/Will-Martinez/Desafio.net_Wilman_Martinez">GitHub.com</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
         <script src="/Public/Javascripts/Home.js"></script>
+        <div class="content has-text-centered">
+            <p>
+                <strong>Solução para o desafio.net</strong> by Will Martinez.
+            </p>
+        </div>
     </footer>
 </body>
 </html>

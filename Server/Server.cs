@@ -11,7 +11,7 @@ app.UseEndpoints(endpoints =>
 {
     try
     {
-        Routes.MapRoutes(endpoints);
+        RoutesView.MapRoutes(endpoints);
     }
     catch (Exception error)
     {

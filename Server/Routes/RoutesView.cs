@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Razor;
 
 namespace CNABSolution.Routes
 {
-    public static class Routes
+    public static class RoutesView
     {
         public static void MapRoutes(IEndpointRouteBuilder endpoint)
         {
@@ -34,6 +34,19 @@ namespace CNABSolution.Routes
                     await context.Response.WriteAsync(pageContent);
                 }
                 catch (Exception error)
+                {
+                    Console.WriteLine($"Error: {error}");
+                    throw new Exception(error.Message);
+                }
+            });
+            endpoint.MapGet("/solution", async context =>
+            {
+                context.Response.ContentType = "text/html; charset=utf-8";
+                try
+                {
+                    var pageContent = await File.ReadAllTextAsync("wwwroot/public/Pages/Solution.html");
+                    await context.Response.WriteAsync(pageContent);
+                } catch (Exception error)
                 {
                     Console.WriteLine($"Error: {error}");
                     throw new Exception(error.Message);
