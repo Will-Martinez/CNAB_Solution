@@ -1,23 +1,30 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using CNABSolution.Routes;
+using CNABSolution.Server.Database;
 
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
 app.UseRouting();
 app.UseStaticFiles();
-app.UseEndpoints(endpoints =>
+if (Database.StartConnection())
 {
-    try
+    app.UseEndpoints(endpoints =>
     {
-        RoutesView.MapRoutes(endpoints);
-    }
-    catch (Exception error)
-    {
-        Console.WriteLine($"Error: {error}");
-        throw new Exception(error.Message);
-    }
-});
+        try
+        {
+            RoutesView.MapRoutes(endpoints);
+        }
+        catch (Exception error)
+        {
+            Console.WriteLine($"Error: {error}");
+            throw new Exception(error.Message);
+        }
+    });
 
-app.Run();
+    app.Run();
+} else
+{
+    Console.Error.WriteLine("Server can not be started if database it's connedted.");
+}
