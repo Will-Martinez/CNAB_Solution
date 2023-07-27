@@ -8,10 +8,10 @@ namespace CNABSolution.Server.Models.Account
     {
         [BsonElement("account_id")]
         [BsonRequired]
-        public string account_id { get; set; }
+        public required string account_id { get; set; }
 
         [BsonElement("account_owner")]
         [BsonRequired]
-        public string account_owner { get; set; }
+        public required string account_owner { get; set; }
     }
 }

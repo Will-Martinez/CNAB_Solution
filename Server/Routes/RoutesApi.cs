@@ -6,7 +6,7 @@ using System.IO;
 using Microsoft.AspNetCore.Mvc.Razor;
 using CNABSolution.Server.Models.Account;
 using CNABSolution.Server.Database;
-
+using CNABSolution.Server.Controller.AccountController;
 namespace CNABSolution.RoutesAPI;
 
 public class RoutesAPI
@@ -19,20 +19,42 @@ public class RoutesAPI
         {
             try
             {
-                var newAccount = new Account
-                {
-                    account_id = "ABC",
-                    account_owner = "Wilman Anderson de Oliveira Martinez",
-                };
-                await accountCollection.InsertOneAsync(newAccount);
+                var accountController = new AccountController("DEF", "Gabriela Natacha de Oliveira Martinez");
+                await accountController.CreateAccount();
                 context.Response.StatusCode = 200;
                 await context.Response.WriteAsync("Account created!");
             } catch (Exception error)
             {
+                Console.Error.WriteLine($"{local} - Internal server error: {error}");
                 context.Response.StatusCode = 500;
-                Console.Error.WriteLine($"{local} - Failed trying to create a new Account: {error}");
-                throw new Exception(error.Message);
+                object errorMessage = DefineErrorMessage(error.Message);
+                await context.Response.WriteAsJsonAsync(errorMessage);
             }
         });
+
+        endpoint.MapGet("/api/getAccountById/{id}", async context =>
+        {
+            try
+            {
+                var teste = context.Request.RouteValues["id"];
+                context.Response.StatusCode = 200;
+                await context.Response.WriteAsync($"ID value is {teste}");
+            } catch (Exception error)
+            {
+                Console.Error.WriteLine($"{local} - Internal server error: {error}");
+                context.Response.StatusCode = 500;
+                object errorMessage = DefineErrorMessage(error.Message);
+                await context.Response.WriteAsJsonAsync(errorMessage);
+            }
+        });
+    }
+
+    public static object DefineErrorMessage(string message)
+    {
+        object errorMessage = new
+        {
+            Error = message,
+        };
+        return errorMessage;
     }
 }
