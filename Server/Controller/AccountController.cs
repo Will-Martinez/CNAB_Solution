@@ -1,4 +1,5 @@
 ﻿using CNABSolution.Server.Models.Account;
+using CNABSolution.Server.DatabaseConfig.Database;
 using MongoDB.Driver;
 namespace CNABSolution.Server.Controller.AccountController;
 
@@ -6,7 +7,7 @@ public class AccountController
 {
     private string account_id;
     private string account_owner;
-    private IMongoCollection<Account> accountCollection = Database.Database.Client.GetDatabase("desafio_net").GetCollection<Account>("Account");
+    private IMongoCollection<Account> accountCollection = Database.Client.GetDatabase("desafio_net").GetCollection<Account>("Account");
     private string local = "[Account-Controller]";
     public AccountController(string account_id, string account_owner)
     {

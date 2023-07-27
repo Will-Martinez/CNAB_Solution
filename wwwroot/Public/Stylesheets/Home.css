@@ -1,18 +1,10 @@
-﻿/* styles.css */
-
-/* Estilo para o contêiner pai */
+﻿
 .container {
-    /* Use display: flex; para ativar o layout flexbox */
     display: flex;
-    /* Use justify-content: center; para centralizar horizontalmente */
     justify-content: center;
-    /* Use align-items: center; para centralizar verticalmente */
     align-items: center;
-    /* Defina a altura da janela para ocupar toda a tela */
     height: 100vh;
 }
-
-/* Estilo para o elemento card */
 .card {
     width: 300px;
 }

@@ -1,7 +1,7 @@
 ﻿using MongoDB.Driver;
 using System.Net.NetworkInformation;
 
-namespace CNABSolution.Server.Database;
+namespace CNABSolution.Server.DatabaseConfig.Database;
 
 public class Database
 {

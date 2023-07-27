@@ -5,11 +5,11 @@ using System.Text.Json.Serialization;
 using System.IO;
 using Microsoft.AspNetCore.Mvc.Razor;
 using CNABSolution.Server.Models.Account;
-using CNABSolution.Server.Database;
+using CNABSolution.Server.DatabaseConfig.Database;
 using CNABSolution.Server.Controller.AccountController;
 namespace CNABSolution.RoutesAPI;
 
-public class RoutesAPI
+public class AccountRoutesApi
 {
     public static void MapRoutes(IEndpointRouteBuilder endpoint)
     {

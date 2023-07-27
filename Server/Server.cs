@@ -1,30 +1,18 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
-using CNABSolution.Routes;
-using CNABSolution.RoutesAPI;
-using CNABSolution.Server.Database;
+using CNABSolution.Server.Config.ServerConfig;
+namespace CNABSolution.Server;
 
-var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
-
-app.UseRouting();
-app.UseStaticFiles();
-if (Database.Client != null)
+public class Server
 {
-    app.UseEndpoints(endpoints =>
+    public static string local = "[SERVER-MAIN]";
+    public static void Main(string[] args)
     {
         try
         {
-            RoutesView.MapRoutes(endpoints);
-            RoutesAPI.MapRoutes(endpoints);
+            ServerConfig.BuildWebApp(args);
         } catch (Exception error)
         {
-            Console.Error.Write($"Failed trying to set routes: {error}");
+            Console.Error.WriteLine($"{local} - Failed trying to start server: {error}");
             throw new Exception(error.Message);
         }
-    });
-    app.Run();
-} else
-{
-    Console.Error.WriteLine("Server can not start if database it's connected.");
+    }
 }
