@@ -51,7 +51,7 @@ namespace CNABSolution.Server.Config.ServerConfig
                 }
                 else
                 {
-                    Console.Error.WriteLine("Server can not start if database it's connected.");
+                    Console.Error.WriteLine("Server can not start if database it's not connected.");
                 }
             }
             catch (Exception error)
