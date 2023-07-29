@@ -16,3 +16,8 @@
     align-items: center;
     gap: 10px;
 }
+
+#selectInputType {
+    justify-content: normal;
+    margin-left: 400px;
+}
