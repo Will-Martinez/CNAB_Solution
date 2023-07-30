@@ -9,19 +9,22 @@ namespace CNABSolution.Routes
 {
     public static class RoutesView
     {
+        public static string local = "[ROUTES-VIEW]";
         public static void MapRoutes(IEndpointRouteBuilder endpoint)
         {
             endpoint.MapGet("/", context =>
             {
                 try
                 {
+                    context.Response.StatusCode = 200;
                     context.Response.Redirect("/home");
                     return Task.CompletedTask;
                 }
                 catch (Exception error)
                 {
-                    Console.WriteLine($"Failed trying to redirect user: {error}");
-                    throw new Exception(error.Message);
+                    context.Response.StatusCode = 500;
+                    Console.Error.WriteLine($"{local} - Failed trying to redirect user to home page: {error}");
+                    throw;
                 }
             });
 
@@ -30,13 +33,22 @@ namespace CNABSolution.Routes
                 context.Response.ContentType = "text/html; charset=utf-8";
                 try
                 {
-                    var pageContent = await File.ReadAllTextAsync("wwwroot/Public/Pages/Home.html");
+                    string pagePath = "wwwroot/Public/Pages/Home.html";
+                    var pageContent = await File.ReadAllTextAsync(pagePath);
+                    if(!File.Exists(pagePath))
+                    {
+                        context.Response.StatusCode = 404;
+                        Console.Error.WriteLine($"{local} - Failed trying to render Home html page");
+                        throw new Exception("Home page not founded.");
+                    }
+                    context.Response.StatusCode = 200;
                     await context.Response.WriteAsync(pageContent);
                 }
                 catch (Exception error)
                 {
-                    Console.WriteLine($"Error: {error}");
-                    throw new Exception(error.Message);
+                    context.Response.StatusCode = 500;
+                    Console.Error.WriteLine($"{local} - Failed trying to access Home page: {error}");
+                    throw;
                 }
             });
             endpoint.MapGet("/solution", async context =>
@@ -44,12 +56,20 @@ namespace CNABSolution.Routes
                 context.Response.ContentType = "text/html; charset=utf-8";
                 try
                 {
-                    var pageContent = await File.ReadAllTextAsync("wwwroot/public/Pages/Solution.html");
+                    string pagePath = "wwwroot/public/Pages/Solution.html";
+                    var pageContent = await File.ReadAllTextAsync(pagePath);
+                    if(!File.Exists(pagePath))
+                    {
+                        context.Response.StatusCode = 404;
+                        Console.Error.WriteLine($"{local} - Failed trying to render Solution html page");
+                        throw new Exception("Solution page not founded.");
+                    }
+                    context.Response.StatusCode = 200;
                     await context.Response.WriteAsync(pageContent);
                 } catch (Exception error)
                 {
-                    Console.WriteLine($"Error: {error}");
-                    throw new Exception(error.Message);
+                    Console.Error.WriteLine($"{local} - Failed trying to access solution page: {error}");
+                    throw;
                 }
             });
         }

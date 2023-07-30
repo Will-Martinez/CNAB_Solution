@@ -11,8 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Boleto.Net" Version="2.1.0.989" />
-    <PackageReference Include="BoletoNetCore" Version="3.0.1.349" />
     <PackageReference Include="MongoDB.Driver" Version="2.20.0" />
     <PackageReference Include="MongoDB.Driver.Core" Version="2.20.0" />
   </ItemGroup>
