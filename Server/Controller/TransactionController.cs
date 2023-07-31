@@ -7,15 +7,15 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 
-namespace CNABSolution.Server.Controller.CNABFileController
+namespace CNABSolution.Server.Controller.TransactionController
 {
     // Classe usada para assumir a responsabilidade de controlador.
-    public class CNABFileController
+    public class TransactionController
     {
-        public static string local = "[CNABFILE-CONTROLLER]";
+        public static string local = "[TRANSACTION-CONTROLLER]";
         public static IMongoCollection<Transaction> transactionCollection = Database.Client.GetDatabase("desafio_net").GetCollection<Transaction>("Transactions");
         private IFormFile cnabFile;
-        public CNABFileController(IFormFile file)
+        public TransactionController(IFormFile file)
         {
             this.cnabFile = file;
         }

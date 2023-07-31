@@ -7,12 +7,12 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http.Extensions;
 using CNABSolution.Server.Models.Transaction;
-using CNABSolution.Server.Controller.CNABFileController;
+using CNABSolution.Server.Controller.TransactionController;
 
-namespace CNABSolution.RoutesCNAB;
+namespace CNABSolution.RoutesTransaction;
 
 // Classe responsável por criar as API's de envio de arquivo padrão cnab e retorno das transações cadastradas
-public class CNABFileAPI
+public class TransactionsAPI
 {
     public static string local = "[CNAB-ROUTES]";
 
@@ -20,9 +20,9 @@ public class CNABFileAPI
     // do tipo CNABFileAPI
     public static void MapRoutes(IEndpointRouteBuilder endpoint)
     {
-        // endpoint para envio do arquivo de padrão cnab. aqui é feito uma instancia do tipo CNABFileController
+        // endpoint responsável pelo envio do arquivo de padrão cnab. aqui é feito uma instancia do tipo CNABFileController
         // para que seja feito os restantes dos passos como parse, leitura do arquivo e etc
-        endpoint.MapPost("/api/sendFile", async context =>
+        endpoint.MapPost("/api/saveTransactions", async context =>
         {
             try
             {
@@ -33,7 +33,7 @@ public class CNABFileAPI
                     Console.WriteLine($"{local} - Failed trying to send cnab file.");
                     throw new Exception("CNAB file is required to transations saving.");
                 }
-                var transactionsController = new CNABFileController(file);
+                var transactionsController = new TransactionController(file);
                 List<Transaction>allTransactions = await transactionsController.TreatCnabFile();
                 if (allTransactions == null)
                 {
@@ -57,7 +57,7 @@ public class CNABFileAPI
         {
             try
             {
-                List<Transaction> transactions = await CNABFileController.GetTransactions();
+                List<Transaction> transactions = await TransactionController.GetTransactions();
                 if(transactions == null)
                 {
                     context.Response.StatusCode = 404;

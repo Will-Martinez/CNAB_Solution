@@ -5,10 +5,10 @@ using System.Text.Json.Serialization;
 using System.IO;
 using Microsoft.AspNetCore.Mvc.Razor;
 
-namespace CNABSolution.Routes
+namespace CNABSolution.RoutesView
 {
     // Classe responsável por renderizar as views no lado do cliente
-    public static class RoutesView
+    public static class RoutesAPIView
     {
         public static string local = "[ROUTES-VIEW]";
 

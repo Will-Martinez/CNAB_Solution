@@ -13,6 +13,45 @@
 </head>
 <body>
 
+    <!--Modal-->
+    <div class="modal" id="detailsModal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Informações da transação</p>
+            </header>
+            <section class="modal-card-body">
+                <div class="control">
+                    <label class="label">Tipo da transação</label>
+                    <input class="input is-rounded" type="text" id="transaction_type_input">
+                    <br />
+                    <label class="label">Data da ocorrência</label>
+                    <input class="input is-rounded" type="text" id="transaction_date_input">
+                    <br />
+                    <label class="label">Valor</label>
+                    <input class="input is-rounded" type="text" id="amount_input">
+                    <br />
+                    <label class="label">CPF</label>
+                    <input class="input is-rounded" type="text" id="cpf_input">
+                    <br />
+                    <label class="label">Cartão</label>
+                    <input class="input is-rounded" type="text" id="card_number_input">
+                    <br />
+                    <label class="label">Dono da loja</label>
+                    <input class="input is-rounded" type="text" id="store_owner_input">
+                    <br />
+                    <label class="label">Nome da loja</label>
+                    <input class="input is-rounded" type="text" id="store_name_input">
+                </div>
+            </section>
+            <footer class="modal-card-foot">
+                <button class="button is-success is-outlined is-rounded" id="saveModal">Salvar</button>
+                <button class="button is-danger is-outlined is-rounded" id="closeModal">Cancelar</button>
+            </footer>
+        </div>
+    </div>
+    <!--endModal-->
+
     <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
         <div id="navbarBasicExample" class="navbar-menu">
             <div class="navbar-start">

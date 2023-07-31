@@ -1,8 +1,8 @@
-﻿const local = "[APICall]";
+﻿const local = "[APICalls]";
 
 export async function UploadFile(file) {
         try {
-            return await fetch(`http://localhost:5075/api/sendFile`, {
+            return await fetch("http://localhost:5075/api/saveTransactions", {
                 method: "POST",
                 body: file,
             });

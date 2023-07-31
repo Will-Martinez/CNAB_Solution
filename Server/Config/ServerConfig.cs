@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
-using CNABSolution.Routes;
+using CNABSolution.RoutesView;
 using CNABSolution.Server.DatabaseConfig.Database;
-using CNABSolution.RoutesCNAB;
+using CNABSolution.RoutesTransaction;
 using Microsoft.AspNetCore.Builder;
 using System;
 namespace CNABSolution.Server.Config.ServerConfig
@@ -43,8 +43,8 @@ namespace CNABSolution.Server.Config.ServerConfig
                     {
                         try
                         {
-                            RoutesView.MapRoutes(endpoints);
-                            CNABFileAPI.MapRoutes(endpoints);
+                            RoutesAPIView.MapRoutes(endpoints);
+                            TransactionsAPI.MapRoutes(endpoints);
                         }
                         catch (Exception error)
                         {
