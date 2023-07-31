@@ -89,7 +89,6 @@ namespace CNABSolution.Server.Controller.CNABFileController
             try
             {
                 await transfeersCollection.InsertManyAsync(transactions);
-                
             } catch (Exception error)
             {
                 Console.Error.WriteLine(error);

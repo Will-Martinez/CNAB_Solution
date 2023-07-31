@@ -72,6 +72,27 @@ namespace CNABSolution.Routes
                     throw;
                 }
             });
+
+            endpoint.MapGet("/Transfeers", async context =>
+            {
+                try
+                {
+                    string pagePath = "wwwroot/public/Pages/Transfeers.html";
+                    var pageContent = await File.ReadAllTextAsync(pagePath);
+                    if(!File.Exists(pagePath))
+                    {
+                        context.Response.StatusCode = 404;
+                        Console.Error.WriteLine($"{local} - Failed trying to render tranfeers html page");
+                        throw new Exception("Transfeers page not founded");
+                    }
+                    context.Response.StatusCode = 200;
+                    await context.Response.WriteAsync(pageContent);
+                } catch (Exception error)
+                {
+                    Console.Error.WriteLine($"{local} - Failed trying to access tranfeers page: {error}");
+                    throw;
+                }
+            });
         }
     }
 }
