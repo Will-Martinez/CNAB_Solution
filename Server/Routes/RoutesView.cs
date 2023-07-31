@@ -51,12 +51,12 @@ namespace CNABSolution.Routes
                     throw;
                 }
             });
-            endpoint.MapGet("/solution", async context =>
+            endpoint.MapGet("/upload", async context =>
             {
                 context.Response.ContentType = "text/html; charset=utf-8";
                 try
                 {
-                    string pagePath = "wwwroot/public/Pages/Solution.html";
+                    string pagePath = "wwwroot/public/Pages/Upload.html";
                     var pageContent = await File.ReadAllTextAsync(pagePath);
                     if(!File.Exists(pagePath))
                     {
@@ -73,17 +73,17 @@ namespace CNABSolution.Routes
                 }
             });
 
-            endpoint.MapGet("/Transfeers", async context =>
+            endpoint.MapGet("/transactions", async context =>
             {
                 try
                 {
-                    string pagePath = "wwwroot/public/Pages/Transfeers.html";
+                    string pagePath = "wwwroot/public/Pages/Transaction.html";
                     var pageContent = await File.ReadAllTextAsync(pagePath);
                     if(!File.Exists(pagePath))
                     {
                         context.Response.StatusCode = 404;
                         Console.Error.WriteLine($"{local} - Failed trying to render tranfeers html page");
-                        throw new Exception("Transfeers page not founded");
+                        throw new Exception("Transaction page not founded");
                     }
                     context.Response.StatusCode = 200;
                     await context.Response.WriteAsync(pageContent);

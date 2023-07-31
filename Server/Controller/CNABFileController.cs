@@ -1,6 +1,7 @@
 ﻿
 using CNABSolution.Server.DatabaseConfig.Database;
-using CNABSolution.Server.Models.Transfeers;
+using CNABSolution.Server.Models.Transaction;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -11,24 +12,24 @@ namespace CNABSolution.Server.Controller.CNABFileController
     public class CNABFileController
     {
         public static string local = "[CNABFILE-CONTROLLER]";
-        public static IMongoCollection<Transfeers> transfeersCollection = Database.Client.GetDatabase("desafio_net").GetCollection<Transfeers>("Transfeers");
+        public static IMongoCollection<Transaction> transactionCollection = Database.Client.GetDatabase("desafio_net").GetCollection<Transaction>("Transactions");
         private IFormFile cnabFile;
         public CNABFileController(IFormFile file)
         {
             this.cnabFile = file;
         }
 
-        public async Task<List<Transfeers>> TreatCnabFile()
+        public async Task<List<Transaction>> TreatCnabFile()
         {
             try
             {
                 string fileContent = await ReadFileContent(cnabFile);
                 string[] lines = fileContent.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
-                List<Transfeers> allTransactions = new List<Transfeers>();
+                List<Transaction> allTransactions = new List<Transaction>();
 
                 foreach (var line in lines)
                 {
-                    List<Transfeers> transactions = ParseCnabFile(line);
+                    List<Transaction> transactions = ParseCnabFile(line);
                     allTransactions.AddRange(transactions);
                 }
                 await RegisterTransaction(allTransactions);
@@ -36,7 +37,7 @@ namespace CNABSolution.Server.Controller.CNABFileController
             } catch (Exception error)
             {
                 Console.Error.WriteLine($"{local} - Failed trying to Configure file content: {error}");
-                throw new Exception(error.Message);
+                throw;
             }
         }
 
@@ -49,11 +50,11 @@ namespace CNABSolution.Server.Controller.CNABFileController
             }
         }
 
-        private List<Transfeers> ParseCnabFile(string line)
+        private List<Transaction> ParseCnabFile(string line)
         {
             try
             {
-                List<Transfeers> transactions = new List<Transfeers>();
+                List<Transaction> transactions = new List<Transaction>();
                 string tipoTransacao = line.Substring(0, 1);
                 string dataOcorrencia = line.Substring(1, 8);
                 string valor = line.Substring(9, 10);
@@ -62,7 +63,7 @@ namespace CNABSolution.Server.Controller.CNABFileController
                 string donoLoja = line.Substring(42, 14);
                 string nomeLoja = line.Substring(56, 18);
 
-                Transfeers data = new Transfeers
+                Transaction data = new Transaction
                 {
                     type = tipoTransacao,
                     transaction_date = dataOcorrencia,
@@ -81,18 +82,32 @@ namespace CNABSolution.Server.Controller.CNABFileController
             catch (Exception error)
             {
                 Console.Error.WriteLine($"{local} - Failed trying to parse cnab file: {error}");
-                throw new Exception(error.Message);
+                throw;
             }
         }
-        private async Task RegisterTransaction(List<Transfeers> transactions)
+        private async Task RegisterTransaction(List<Transaction> transactions)
         {
             try
             {
-                await transfeersCollection.InsertManyAsync(transactions);
+                await transactionCollection.InsertManyAsync(transactions);
             } catch (Exception error)
             {
                 Console.Error.WriteLine(error);
-                throw new Exception(error.Message);
+                throw;
+            }
+        }
+
+        public static async Task<List<Transaction>> GetTransactions()
+        {
+            try
+            {
+                IAsyncCursor<Transaction> cursor = await transactionCollection.FindAsync(new BsonDocument());
+                List<Transaction> transactions = await cursor.ToListAsync();
+                return transactions;
+            } catch (Exception error)
+            {
+                Console.Error.WriteLine($"{local} - Failed trying to get all transactions: {error}");
+                throw;
             }
         }
 

@@ -2,13 +2,13 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Tranfeers</title>
+    <title>Transactions</title>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.css" />
     <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.js"></script>
-    <script src="/Public/Javascripts/Transfeers.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.10.25/i18n/Portuguese-Brasil.json"></script>
     <link rel="stylesheet" href="/Public/Stylesheets/Bulma.css">
-    <link rel="stylesheet" href="/Public/Stylesheets/Tranfeers.css"/>
+    <link rel="stylesheet" href="/Public/Stylesheets/Transaction.css" />
 </head>
 <body>
 
@@ -17,17 +17,14 @@
             <div class="navbar-start">
                 <div class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link">
-                        Home
+                        Transactions
                     </a>
                     <div class="navbar-dropdown">
-                        <a class="navbar-item" href="/solution">
+                        <a class="navbar-item" href="/upload">
                             Upload File
                         </a>
                         <a class="navbar-item" href="/home">
                             Home
-                        </a>
-                        <a class="navbar-item" href="/Transfeers">
-                            Transfeers
                         </a>
                     </div>
                 </div>
@@ -36,7 +33,7 @@
     </nav>
     <br />
     <div class="table-container">
-        <table id="transfeersTable" class="display">
+        <table id="transactionsTable" class="display">
             <thead>
                 <tr>
                     <th>Column 1</th>
@@ -55,5 +52,8 @@
             </tbody>
         </table>
     </div>
+    <footer>
+        <script src="/Public/Javascripts/Transaction.js" type="module"></script>
+    </footer>
 </body>
 </html>

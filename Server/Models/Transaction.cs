@@ -2,9 +2,9 @@
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace CNABSolution.Server.Models.Transfeers;
+namespace CNABSolution.Server.Models.Transaction;
 
-public class Transfeers
+public class Transaction
 {
     [BsonId]
     [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
