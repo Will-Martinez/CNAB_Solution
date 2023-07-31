@@ -3,10 +3,13 @@ using System.Net.NetworkInformation;
 
 namespace CNABSolution.Server.DatabaseConfig.Database;
 
+// Classe responsável por conectar em uma instancia local do mongodb
 public class Database
 {
     public static MongoClient Client { get; set; } = StartConnection();
 
+    // Método public e estátivo que é atribuido ao Client(tipo MongoClient) para referenciar o banco de dados 
+    // e a collection certa
     public static MongoClient StartConnection()
     {
         string local = "[DB-CONNECTION]";

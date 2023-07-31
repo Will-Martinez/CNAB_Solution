@@ -9,6 +9,7 @@ using System.Text.Json;
 
 namespace CNABSolution.Server.Controller.CNABFileController
 {
+    // Classe usada para assumir a responsabilidade de controlador.
     public class CNABFileController
     {
         public static string local = "[CNABFILE-CONTROLLER]";
@@ -19,6 +20,7 @@ namespace CNABSolution.Server.Controller.CNABFileController
             this.cnabFile = file;
         }
 
+        // Método responsável por tratar os dados contidos no arquivo padrão cnab
         public async Task<List<Transaction>> TreatCnabFile()
         {
             try
@@ -41,6 +43,7 @@ namespace CNABSolution.Server.Controller.CNABFileController
             }
         }
 
+        // Método privado utilizado somente pela classe para ler o conteúdo do arquivo antes de tratar o mesmo.
         private async Task<string> ReadFileContent(IFormFile file)
         {
             using (var stream = file.OpenReadStream())
@@ -50,6 +53,7 @@ namespace CNABSolution.Server.Controller.CNABFileController
             }
         }
 
+        // Método privado responsável por parsear/tratar os dados de transação contidos em cada linha do arquivo. 
         private List<Transaction> ParseCnabFile(string line)
         {
             try
@@ -85,6 +89,8 @@ namespace CNABSolution.Server.Controller.CNABFileController
                 throw;
             }
         }
+
+        // Método privado responsável por registar uma lista de transação(funciona com uma ou várias linhas)
         private async Task RegisterTransaction(List<Transaction> transactions)
         {
             try
@@ -97,6 +103,9 @@ namespace CNABSolution.Server.Controller.CNABFileController
             }
         }
 
+        // Método responsável por retornar uma lista com todas as transações cadastradas na base de dados
+        // Usado na rota de transactions para renderizar os dados na tabela.
+        // seu nivel de acesso é public e estático para que seja possivel ser acessado sem a necessidade de criar uma instancia.
         public static async Task<List<Transaction>> GetTransactions()
         {
             try

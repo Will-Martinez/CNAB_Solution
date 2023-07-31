@@ -2,11 +2,10 @@
 
 export async function UploadFile(file) {
         try {
-            const result = await fetch(`http://localhost:5075/api/sendFile`, {
+            return await fetch(`http://localhost:5075/api/sendFile`, {
                 method: "POST",
                 body: file,
             });
-            return result.json();
         } catch (error) {
             console.error(`${local} - Failed trying to send file: `, error);
             throw error.message;
@@ -16,7 +15,7 @@ export async function UploadFile(file) {
 export async function GetTransactions() {
         try {
             return await fetch("http://localhost:5075/api/getTransactions", {
-                headers: { "Content-Type": "application/json" },
+                headers: { "Content-Type": "application.json" }
             });
         } catch (error) {
             console.error(`${local} - Failed trying to get transactions: `, error);

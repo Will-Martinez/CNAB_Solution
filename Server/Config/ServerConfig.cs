@@ -7,10 +7,13 @@ using Microsoft.AspNetCore.Builder;
 using System;
 namespace CNABSolution.Server.Config.ServerConfig
 {
+    // Classe responsável por configurar rotas, iniciar o builder webapp e chamar a conexão com banco de dados
     public class ServerConfig
     {
         public static string local = "[SERVER-CONFIG]";
 
+        // Método estático e public acessivel para o arquivo server.cs consiga iniciar o app sem
+        // necessidade de criar uma instancia do tipo ServerConfig
         public static void BuildWebApp(string[] args)
         {
             try
@@ -27,7 +30,8 @@ namespace CNABSolution.Server.Config.ServerConfig
             }
         }
 
-        public static void ConfigureMiddlewares(IApplicationBuilder app)
+        // Método privado acessivel somente a classe ServerConfig para de fato realizar as configurações do servidor
+        private static void ConfigureMiddlewares(IApplicationBuilder app)
         {
             try
             {

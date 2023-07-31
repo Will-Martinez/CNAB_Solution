@@ -4,8 +4,10 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace CNABSolution.Server.Models.Transaction;
 
+// Classe publica usada somente para definir um modelo de dados para os dados de transação
+// criado baseado nos dados do arquivo cnab
 public class Transaction
-{
+{ 
     [BsonId]
     [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
     public string? Id { get; set; }

@@ -12,16 +12,30 @@ document.addEventListener("DOMContentLoaded", function () {
         fileNameUploaded.innerText = fileName;
     });
 
-
     saveFile.addEventListener("click", async function () {
-        if (fileInput.value == "" || fileInput == null) {
-            alert("Nenhum arquivo selecionado.");
-            return;
+        try {
+            if (fileInput.value == "" || fileInput == null) {
+                alert("Nenhum arquivo selecionado.");
+                return;
+            }
+            const file = fileInput.files[0];
+            const formData = new FormData();
+            formData.append("arquivo", file);
+            const response = await UploadFile(formData);
+            if (response.status == 200 && response.statusText == "OK") {
+                // Caso queira verificar o resultado...
+                //const responseJson = await response.json();
+                //console.log("responseJson: ", responseJson);
+                alert("Arquivo enviado e dados salvos com sucesso!");
+                return;
+            } else {
+                alert(`Falha no upload do arquivo: ${response.statusText}`);
+                return;
+            }
+        } catch (error) {
+            console.error("Failed trying to send cnab file");
+            throw error.message;
         }
-        const file = fileInput.files[0];
-        const formData = new FormData();
-        formData.append("arquivo", file);
-        const sendFile = await UploadFile(formData);
     });
 
     cancellFileUpload.addEventListener("click", function () {

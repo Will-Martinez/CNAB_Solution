@@ -11,12 +11,17 @@ using CNABSolution.Server.Controller.CNABFileController;
 
 namespace CNABSolution.RoutesCNAB;
 
+// Classe responsável por criar as API's de envio de arquivo padrão cnab e retorno das transações cadastradas
 public class CNABFileAPI
 {
     public static string local = "[CNAB-ROUTES]";
 
+    // Método publico e estático para que a classe de configuração acesse sem necessidade de criar uma instancia
+    // do tipo CNABFileAPI
     public static void MapRoutes(IEndpointRouteBuilder endpoint)
     {
+        // endpoint para envio do arquivo de padrão cnab. aqui é feito uma instancia do tipo CNABFileController
+        // para que seja feito os restantes dos passos como parse, leitura do arquivo e etc
         endpoint.MapPost("/api/sendFile", async context =>
         {
             try
@@ -46,6 +51,8 @@ public class CNABFileAPI
             }
         });
 
+        // endpoint responsável por retornar todas as transações feitas até o momento. Dados são buscados na collection
+        // Transactions
         endpoint.MapGet("/api/getTransactions", async context =>
         {
             try

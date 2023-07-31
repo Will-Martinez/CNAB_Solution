@@ -7,11 +7,15 @@ using Microsoft.AspNetCore.Mvc.Razor;
 
 namespace CNABSolution.Routes
 {
+    // Classe responsável por renderizar as views no lado do cliente
     public static class RoutesView
     {
         public static string local = "[ROUTES-VIEW]";
+
+        // Método publico e estático para que o arquivo de configuração consiga acessar esse método
         public static void MapRoutes(IEndpointRouteBuilder endpoint)
         {
+            // endpoint para que caso o usuário entre no core da aplicação/rota printipal, ele é redirecionado para home
             endpoint.MapGet("/", context =>
             {
                 try
@@ -28,6 +32,7 @@ namespace CNABSolution.Routes
                 }
             });
 
+            // endpoint responsável por renderizar o view de home
             endpoint.MapGet("/home", async context =>
             {
                 context.Response.ContentType = "text/html; charset=utf-8";
@@ -51,6 +56,8 @@ namespace CNABSolution.Routes
                     throw;
                 }
             });
+
+            // endpoint responsável por renderizar o view de Upload(upload do arquivo cnab)
             endpoint.MapGet("/upload", async context =>
             {
                 context.Response.ContentType = "text/html; charset=utf-8";
@@ -73,6 +80,7 @@ namespace CNABSolution.Routes
                 }
             });
 
+            // endpoint responsável por renderizar o view de transactions com os dados de transação
             endpoint.MapGet("/transactions", async context =>
             {
                 try
