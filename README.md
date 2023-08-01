@@ -6,7 +6,8 @@ Este é um projeto de aplicação web que visa atender à demanda de realizar o 
 
 ## Tecnologias utilizadas
 
-- Microsoft Visual Studio 2022 IDE
+- Aplicação construída usando requisições somente http por conta de praticidade.
+- Usado como ferramenta de desenvolvimento o Microsoft Visual Studio 2022 IDE
 - Backend desenvolvido em ASP.NET Core (C#), e o frontend foi desenvolvido usando HTML, CSS e JavaScript, com o framework CSS Bulma e jQuery para a utilização do plugin DataTable.
 - Foi utilizada a biblioteca gratuita MongoDB.Driver para C# para conectar a aplicação a uma instância local do banco de dados MongoDB.
 - Postman foi utilizado para testar a API.
