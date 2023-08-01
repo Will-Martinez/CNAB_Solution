@@ -138,11 +138,13 @@ $(document).ready(async function () {
                     if (confirmTransactionRemove == true) {
                         const removeTransaction = await DeleteTransaction(rowData._id);
                         if (removeTransaction.status == 200) {
-                            detailsModal.hide();
                             window.location.reload();
+                            detailsModal.hide();
                         } else {
                             alert("Falha ao tentar deletar a transação da base de dados.");
+                            window.location.reload();
                         }
+                        window.location.reload();
                     } else {
                         window.location.reload();
                     }
