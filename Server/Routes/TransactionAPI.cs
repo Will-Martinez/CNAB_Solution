@@ -14,7 +14,7 @@ namespace CNABSolution.RoutesTransaction;
 // Classe responsável por criar as API's de envio de arquivo padrão cnab e retorno das transações cadastradas
 public class TransactionsAPI
 {
-    public static string local = "[CNAB-ROUTES]";
+    public static string local = "[TRANSACTIONS-ROUTES]";
 
     // Método publico e estático para que a classe de configuração acesse sem necessidade de criar uma instancia
     // do tipo CNABFileAPI
@@ -22,7 +22,7 @@ public class TransactionsAPI
     {
         // endpoint responsável pelo envio do arquivo de padrão cnab. aqui é feito uma instancia do tipo CNABFileController
         // para que seja feito os restantes dos passos como parse, leitura do arquivo e etc
-        endpoint.MapPost("/api/saveTransactions", async context =>
+        endpoint.MapPost("/api/sendFile", async context =>
         {
             try
             {
@@ -70,6 +70,44 @@ public class TransactionsAPI
             {
                 context.Response.StatusCode = 500;
                 Console.Error.WriteLine($"{local} - Internal server error: {error}");
+                throw;
+            }
+        });
+
+        endpoint.MapDelete("/api/deleteTransaction/{id}", async context =>
+        {
+            try
+            {
+                var transactionID = context.Request.RouteValues["id"].ToString();
+                if (transactionID == null || transactionID == "")
+                {
+                    context.Response.StatusCode = 404;
+                    Console.Error.WriteLine($"{local} - ID value required for transaction deleting.");
+                    throw new Exception("ID value required for transaction deleting.");
+                }
+                await TransactionController.DeleteTransaction(transactionID);
+                context.Response.StatusCode = 200;
+                await context.Response.WriteAsync("Transaction deleted!");
+            } catch (Exception error)
+            {
+                context.Response.StatusCode = 500;
+                Console.Error.WriteLine($"{local} - Internal server error: {error}");
+                throw;
+            }
+        });
+
+        endpoint.MapPost("/api/createTransaction", async context =>
+        {
+            try
+            {
+                using (var reader = new StreamReader(context.Request.Body))
+                {
+                    var bodyContent = await reader.ReadToEndAsync();
+                }
+            } catch (Exception error)
+            {
+                context.Response.StatusCode = 500;
+                Console.Error.WriteLine($"{local} - Internet server error: {error}");
                 throw;
             }
         });

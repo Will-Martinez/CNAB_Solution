@@ -1,5 +1,13 @@
-﻿import { GetTransactions } from "../../APICalls/APICalls.js";
+﻿import { GetTransactions, DeleteTransaction, CreateTransaction } from "../../APICalls/APICalls.js";
 $(document).ready(async function () {
+
+    const transaction_type_input = $("#transaction_type_input");
+    const transaction_date_input = $("#transaction_date_input");
+    const amount_input = $("#amount_input");
+    const cpf_input = $("#cpf_input");
+    const card_number_input = $("#card_number_input");
+    const store_owner_input = $("#store_owner_input");
+    const store_name_input = $("#store_name_input");
 
     async function GetTransactionsData() {
         try {
@@ -49,15 +57,6 @@ $(document).ready(async function () {
     }
 
     function InputModalData(modalData) {
-
-        const transaction_type_input = $("#transaction_type_input");
-        const transaction_date_input = $("#transaction_date_input");
-        const amount_input = $("#amount_input");
-        const cpf_input = $("#cpf_input");
-        const card_number_input = $("#card_number_input");
-        const store_owner_input = $("#store_owner_input");
-        const store_name_input = $("#store_name_input");
-
         transaction_type_input.val(modalData.transaction_type);
         transaction_date_input.val(modalData.transaction_date);
         amount_input.val(modalData.amount);
@@ -67,12 +66,24 @@ $(document).ready(async function () {
         store_name_input.val(modalData.store_name);
     }
 
+    function ClearModal() {
+        transaction_type_input.val("");
+        transaction_date_input.val("");
+        amount_input.val("");
+        cpf_input.val("");
+        card_number_input.val("");
+        store_owner_input.val("");
+        store_name_input.val("");
+    }
+
     async function LoadTable() {
         const detailsModal = $("#detailsModal");
         const transactionsRowData = $("#transactionsTable tbody");
-        const saveModal = $("#saveModal");
         const closeModal = $("#closeModal");
-        
+        const deleteTransaction = $("#deleteTransaction");
+        const registerTransaction = $("#registerTransaction");
+        const saveTransaction = $("#saveTransaction");
+
         try {
             const transactionTable = $("#transactionsTable").DataTable({
                 language: { url: 'https://cdn.datatables.net/plug-ins/1.10.25/i18n/Portuguese-Brasil.json' },
@@ -101,11 +112,46 @@ $(document).ready(async function () {
             transactionsRowData.on("click", "button", async function () {
                 const rowData = await transactionTable.row($(this).closest("tr")).data();
                 detailsModal.show();
-                console.log("rowData result: ", rowData);
                 InputModalData(rowData);
+
+                deleteTransaction.on("click", async function () {
+                    const confirmTransactionRemove = confirm("Tem certeza que deseja remover essa transação ?");
+                    if (confirmTransactionRemove == true) {
+                        const removeTransaction = await DeleteTransaction(rowData._id);
+                        if (removeTransaction.status == 200) {
+                            ClearModal();
+                            detailsModal.hide();
+                            window.location.reload();
+                        } else {
+                            alert("Falha ao tentar deletar a transação da base de dados.");
+                        }
+                    }
+                });
+
             });
 
+            registerTransaction.on("click", function () {
+                deleteTransaction.css("display", "none");
+                saveTransaction.css("discplay", "block");
+                detailsModal.show();
+            });
+
+            saveTransaction.on("click", async function () {
+
+                const newTransaction = new Object();
+               
+                newTransaction.transaction_type = transaction_type_input.val();
+                newTransaction.transaction_date = transaction_date_input.val();
+                newTransaction.amount = amount_input.val();
+                newTransaction.cpf = cpf_input.val();
+                newTransaction.card_number = card_number_input.val();
+                newTransaction.store_owner = store_owner_input.val();
+                newTransaction.store_name = store_name_input.val();
+
+                await CreateTransaction(newTransaction);
+            });
             closeModal.on("click", function () {
+                ClearModal();
                 detailsModal.hide();
             });
         } catch (error) {

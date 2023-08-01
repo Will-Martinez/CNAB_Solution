@@ -1,4 +1,4 @@
-﻿import { UploadFile } from "../../APICalls/APICalls.js";
+﻿import { UploadFile } from "../../APICalls/APICalls.js"
 document.addEventListener("DOMContentLoaded", function () {
     
     const saveFile = document.getElementById("saveFile");

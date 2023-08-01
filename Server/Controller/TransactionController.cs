@@ -120,5 +120,25 @@ namespace CNABSolution.Server.Controller.TransactionController
             }
         }
 
+        // Método estático e public responsável por deletar uma transação pelo seu id cadastrado na base de dados.
+        // Nivel de acesso atual usado para que o método seja acessível sem que uma nova instancia da do tipo TransactionController seja criada
+        public static async Task DeleteTransaction(string id)
+        {
+            try
+            {
+                if(id == null || id == "")
+                {
+                    Console.Error.WriteLine($"{local} - ID not defined to delete transaction");
+                    throw new Exception("ID not defined to delete transaction");
+                }
+                var filter = Builders<Transaction>.Filter.Eq(query => query.Id, id);
+                await transactionCollection.DeleteOneAsync(filter);
+            } catch (Exception error)
+            {
+                Console.Error.WriteLine($"{local} - Failed trying to delete transaction: ", error);
+                throw;
+            }
+        }
+
     }
 }

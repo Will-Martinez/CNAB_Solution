@@ -1,8 +1,12 @@
 ﻿.table-container {
-    max-width: 75%; /* Defina o valor que você deseja */
-    margin: 0 auto; /* Centralizar o contêiner horizontalmente */
+    max-width: 75%;
+    margin: 0 auto;
 }
 
 #detailsModal {
     display: none; 
+}
+
+#createTransaction {
+    display: none;
 }
