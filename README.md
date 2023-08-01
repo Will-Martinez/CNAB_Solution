@@ -54,7 +54,7 @@ Nesta rota, estão disponíveis as seguintes funcionalidades:
 
 - **Funcionalidades de Filtro na Tabela**: A tabela de transações oferece funcionalidades de filtro, incluindo:
     - Filtro Crescente e Decrescente: Permite ordenar as transações em ordem crescente ou decrescente.
-    - Filtro por Nome: Permite filtrar as transações pelo nome.
+    - Filtro de pesquisa: Permite filtrar qualquer informação na tabela como nome, valor, cpf e vários outros.
     - Paginação: A tabela é paginada, facilitando a navegação entre as transações.
     - Quantidade de Elementos por Página: O usuário pode definir a quantidade de elementos a serem exibidos por página.
 
