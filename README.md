@@ -26,7 +26,7 @@ Este é um projeto de aplicação web que visa atender à demanda de realizar o 
 - Com o .NET instalado, abra o terminal do Windows ou Linux e acesse a pasta onde o repositório foi clonado.
 - Execute o comando "dotnet build" seguido por "dotnet run". Em seguida, o terminal imprimirá mensagens como mostrado abaixo:
 
-![image](./prints/Termianl.PNG)
+![image](./prints/Terminal.PNG)
 
 
 ## Funcionamento da aplicação
