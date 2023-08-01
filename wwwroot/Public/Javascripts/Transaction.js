@@ -1,6 +1,8 @@
-﻿import { GetTransactions, DeleteTransaction, CreateTransaction } from "../../APICalls/APICalls.js";
+﻿// importa as 3 funções responsáveis por chamar as API's
+import { GetTransactions, DeleteTransaction, CreateTransaction } from "../../APICalls/APICalls.js";
 $(document).ready(async function () {
 
+    // Definindo globalmente os inputs do form;
     const transaction_type_input = $("#transaction_type_input");
     const transaction_date_input = $("#transaction_date_input");
     const amount_input = $("#amount_input");
@@ -9,6 +11,7 @@ $(document).ready(async function () {
     const store_owner_input = $("#store_owner_input");
     const store_name_input = $("#store_name_input");
 
+    // Função para coletar todas as transações na base de dados
     async function GetTransactionsData() {
         try {
             const transactionsData = await GetTransactions();
@@ -20,6 +23,7 @@ $(document).ready(async function () {
         }
     }
 
+    // Função para desenhar os dados na tabela
     async function DrawTableData(transactions, table) {
         for (const data of transactions) {
             table.row.add({
@@ -37,10 +41,12 @@ $(document).ready(async function () {
         table.draw();
     }
 
+    // Função para formatar o valor da transação para a moeda brasileira
     function FormatBrlCurrency(amount) {
         return Number(amount).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
     }
 
+    // Função para formatar os tipos de transação e exibir ao cliente de forma legível
     function FormatTransactionType(transactionType) {
         switch (transactionType) {
             case "1":
@@ -56,6 +62,7 @@ $(document).ready(async function () {
         }
     }
 
+    // Função para abrir o modal com os dados da linha no qual o botão de detalhes foi clicado
     function InputModalData(modalData) {
         transaction_type_input.val(modalData.transaction_type);
         transaction_date_input.val(modalData.transaction_date);
@@ -66,6 +73,7 @@ $(document).ready(async function () {
         store_name_input.val(modalData.store_name);
     }
 
+    // Função para limpar os campos do modal
     function ClearModal() {
         transaction_type_input.val("");
         transaction_date_input.val("");
@@ -76,6 +84,7 @@ $(document).ready(async function () {
         store_name_input.val("");
     }
 
+    // Função para validar se algum campo do modal está em branco no momento de salvar os mesmos
     function ValidateFormInput() {
         if (
             transaction_type_input.val() == "" ||
@@ -93,6 +102,7 @@ $(document).ready(async function () {
         }
     }
 
+    // Função principal que carrega a tabela na view de transactions
     async function LoadTable() {
         const detailsModal = $("#detailsModal");
         const transactionsRowData = $("#transactionsTable tbody");
@@ -101,6 +111,7 @@ $(document).ready(async function () {
         const registerTransaction = $("#registerTransaction");
         const saveTransaction = $("#saveTransaction");
 
+        // carregando a tabela e seus parametros
         try {
             const transactionTable = $("#transactionsTable").DataTable({
                 language: { url: 'https://cdn.datatables.net/plug-ins/1.10.25/i18n/Portuguese-Brasil.json' },
@@ -124,8 +135,11 @@ $(document).ready(async function () {
                 responsive: true,
             });
 
+            // chamando a função de desenhas os dados no corpo da tabela
             const transactions = await GetTransactionsData();
             await DrawTableData(transactions, transactionTable);
+
+            // evento de click no botão de detalhes para mostrar o modal com os dados dalinha onde foi clicado
             transactionsRowData.on("click", "button", async function () {
                 const rowData = await transactionTable.row($(this).closest("tr")).data();
                 deleteTransaction.css("display", "block");
@@ -133,6 +147,7 @@ $(document).ready(async function () {
                 detailsModal.show();
                 InputModalData(rowData);
 
+                // evento de click para deletar a transação caso assim seja necessário
                 deleteTransaction.on("click", async function () {
                     const confirmTransactionRemove = confirm("Tem certeza que deseja remover essa transação ?");
                     if (confirmTransactionRemove == true) {
@@ -152,12 +167,14 @@ $(document).ready(async function () {
 
             });
 
+            // evento de click para alterar alguns atributos de botão como mostrar e esconder o botão de salvar
             registerTransaction.on("click", function () {
                 deleteTransaction.css("display", "none");
                 saveTransaction.css("display", "block");
                 detailsModal.show();
             });
 
+            // evento de click para criar uma nova transação sem o uso de um arquivo de padrão cnab
             saveTransaction.on("click", async function () {
 
                 const newTransaction = new Object();
@@ -170,6 +187,7 @@ $(document).ready(async function () {
                 newTransaction.store_owner = store_owner_input.val();
                 newTransaction.store_name = store_name_input.val();
 
+                // validando os campos do modal antes de enviar uma requisição de post via API
                 const formHasEmptyData = ValidateFormInput();
                 if (formHasEmptyData == true) {
                     return
@@ -182,6 +200,8 @@ $(document).ready(async function () {
                 }
                 window.location.reload();
             });
+
+            // limpa o modal ao ser fechado para que os dados não sobreescrevam os campos
             closeModal.on("click", function () {
                 ClearModal();
                 detailsModal.hide();
@@ -192,6 +212,7 @@ $(document).ready(async function () {
         }
     }
 
+    // Chama a funcção principal da tabela
     LoadTable();
 
 });
