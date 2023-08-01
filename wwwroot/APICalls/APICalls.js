@@ -2,7 +2,7 @@
 
 export async function UploadFile(file) {
         try {
-            return await fetch("http://localhost:5075/api/sendFile", {
+            return await fetch("/api/sendFile", {
                 method: "POST",
                 body: file,
             });
@@ -14,7 +14,7 @@ export async function UploadFile(file) {
 
 export async function GetTransactions() {
         try {
-            return await fetch("http://localhost:5075/api/getTransactions", {
+            return await fetch("/api/getTransactions", {
                 headers: { "Content-Type": "application.json" }
             });
         } catch (error) {
@@ -25,7 +25,7 @@ export async function GetTransactions() {
 
 export async function DeleteTransaction(transactionID) {
     try {
-        return await fetch(`http://localhost:5075/api/deleteTransaction/${transactionID}`, {
+        return await fetch(`/api/deleteTransaction/${transactionID}`, {
             headers: { "Content-Type": "application.json" },
             method: "DELETE",
         });
@@ -36,7 +36,7 @@ export async function DeleteTransaction(transactionID) {
 
 export async function CreateTransaction(transaction) {
     try {
-        return await fetch("http://localhost:5075/api/createTransaction", {
+        return await fetch("/api/createTransaction", {
             headers: { "Content-Type": "application/json" },
             method: "POST",
             body: JSON.stringify(transaction),
