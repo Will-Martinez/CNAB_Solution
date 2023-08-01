@@ -114,6 +114,14 @@ Retorna todas as transações na base de dados.
 |--------|----------|------------------------------|
 | nenhum | nenhum   | API restorna todas as transações sem nenhum filtro sem parametros. |
 
+**Resposta**
+
+| Código | Descrição                    |
+|--------|------------------------------|
+| 200    | JSON.|
+| 404    | Transactions not founded.|
+| 500    | Internal server error.|
+
 **Exemplo de resposta**
 
 ```json
@@ -143,14 +151,6 @@ Retorna todas as transações na base de dados.
 
 ```
 
-**Resposta**
-
-| Código | Descrição                    |
-|--------|------------------------------|
-| 200    | JSON.|
-| 404    | Transactions not founded.|
-| 500    | Internal server error.|
-
 ### POST /api/sendFile
 
 Envia um arquivo de padrão cnab para que seja tratado no lado do servidor e salvar os dados contidos nele.
@@ -168,5 +168,34 @@ Envia um arquivo de padrão cnab para que seja tratado no lado do servidor e sal
 | 200    | JSON.|
 | 404    | CNAB file is required to transations saving.|
 | 500    | Internal server error.|
+
+**Exemplo de resposta**
+
+```json
+
+[
+    {
+        "id": "64c868581365f9192f3804ca",
+        "type": "3",
+        "transaction_date": "20230102",
+        "amount": "0000015100",
+        "cpf": "19551496078",
+        "card_number": "1753****3153",
+        "store_owner": "AFONSO PEREIRA",
+        "store_name": "ADEGA PEREIRA     "
+    },
+    {
+        "id": "64c868581365f9192f3804cb",
+        "type": "4",
+        "transaction_date": "20230102",
+        "amount": "0000014100",
+        "cpf": "19955098091",
+        "card_number": "2123****7687",
+        "store_owner": "PRISCILA COSTA",
+        "store_name": "LOJAS MÁGICO DE OZ"
+    },
+]
+
+```
 
 Dessa forma, o projeto atende às necessidades de upload e tratamento de arquivos cnab, além de proporcionar uma visualização clara das transações armazenadas na base de dados MongoDB.
