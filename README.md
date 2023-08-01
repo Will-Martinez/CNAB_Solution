@@ -63,6 +63,110 @@ Nesta rota, estão disponíveis as seguintes funcionalidades:
 
 ![image](https://github.com/Will-Martinez/Desafio.net_Wilman_Martinez/assets/110312747/eb969553-a4df-4dc4-95cf-4b2a253f67a3)
 
+### Documentação das API's
 
+- Foi separado as API's de view com as api que tratam os dados no lado do servidor, de forma que a aplicação usa rotas apenas como renderização de arquivo para o frontend e as abaixo para
+  tratar os dados necessários.
+
+### POST /api/createTransaction
+
+Cria uma nova transação.
+
+**Parâmetros**
+
+| Nome         | Tipo     | Descrição                    |
+|--------------|----------|------------------------------|
+| transaction  | Object   | Objeto com os dados da transação a ser criada e informada no corpo da requisição. |
+
+**Resposta**
+
+| Código | Descrição                    |
+|--------|------------------------------|
+| 200    | Transaction created.|
+| 404    | Body request not founded.|
+| 500    | Internal server error.|
+
+### DELETE /api/deleteTransaction/{id}
+
+Remove uma transação da base de dados.
+
+**Parâmetros**
+
+| Nome | Tipo     | Descrição                    |
+|------|----------|------------------------------|
+| id   | string   | id da transação cadastrada na base de dados. |
+
+**Resposta**
+
+| Código | Descrição                    |
+|--------|------------------------------|
+| 200    | Transaction deleted.|
+| 404    | ID value required for transaction deleting.|
+| 500    | Internal server error.|
+
+### GET /api/getTransactions
+
+Retorna todas as transações na base de dados.
+
+**Parâmetros**
+
+| Nome   | Tipo     | Descrição                    |
+|--------|----------|------------------------------|
+| nenhum | nenhum   | API restorna todas as transações sem nenhum filtro sem parametros. |
+
+**Exemplo de resposta**
+
+```json
+
+[
+    {
+        "id": "64c868581365f9192f3804ca",
+        "type": "3",
+        "transaction_date": "20230102",
+        "amount": "0000015100",
+        "cpf": "19551496078",
+        "card_number": "1753****3153",
+        "store_owner": "AFONSO PEREIRA",
+        "store_name": "ADEGA PEREIRA     "
+    },
+    {
+        "id": "64c868581365f9192f3804cb",
+        "type": "4",
+        "transaction_date": "20230102",
+        "amount": "0000014100",
+        "cpf": "19955098091",
+        "card_number": "2123****7687",
+        "store_owner": "PRISCILA COSTA",
+        "store_name": "LOJAS MÁGICO DE OZ"
+    },
+]
+
+```
+
+**Resposta**
+
+| Código | Descrição                    |
+|--------|------------------------------|
+| 200    | JSON.|
+| 404    | Transactions not founded.|
+| 500    | Internal server error.|
+
+### POST /api/sendFile
+
+Envia um arquivo de padrão cnab para que seja tratado no lado do servidor e salvar os dados contidos nele.
+
+**Parâmetros**
+
+| Nome | Tipo     | Descrição                    |
+|------|----------|------------------------------|
+| file |IFormFile | Arquivo selecionado e enviado pelo usuário. |
+
+**Resposta**
+
+| Código | Descrição                    |
+|--------|------------------------------|
+| 200    | JSON.|
+| 404    | CNAB file is required to transations saving.|
+| 500    | Internal server error.|
 
 Dessa forma, o projeto atende às necessidades de upload e tratamento de arquivos cnab, além de proporcionar uma visualização clara das transações armazenadas na base de dados MongoDB.
