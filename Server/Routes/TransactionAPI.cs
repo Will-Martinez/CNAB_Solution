@@ -128,7 +128,7 @@ public class TransactionsAPI
             } catch (Exception error)
             {
                 context.Response.StatusCode = 500;
-                Console.Error.WriteLine($"{local} - Internet server error: {error}");
+                Console.Error.WriteLine($"{local} - Internal server error: {error}");
                 throw;
             }
         });
