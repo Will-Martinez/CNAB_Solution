@@ -120,7 +120,7 @@ namespace CNABSolution.Server.Controller.TransactionController
             }
         }
 
-        // Método estático e public responsável por deletar uma transação pelo seu id cadastrado na base de dados.
+        // Método estático e publico responsável por deletar uma transação pelo seu id cadastrado na base de dados.
         // Nivel de acesso atual usado para que o método seja acessível sem que uma nova instancia da do tipo TransactionController seja criada
         public static async Task DeleteTransaction(string id)
         {
@@ -136,6 +136,25 @@ namespace CNABSolution.Server.Controller.TransactionController
             } catch (Exception error)
             {
                 Console.Error.WriteLine($"{local} - Failed trying to delete transaction: ", error);
+                throw;
+            }
+        }
+
+        // Método estático e publico responsável por cadastrar uma nova transação na base de dados
+        // Nivel de acesso atual usado para que o método seja acessível sem que uma nova instancia da do tipo TransactionController seja criada
+        public static async Task CreateTransaction(Transaction transaction)
+        {
+            try
+            {
+                if (transaction == null)
+                {
+                    Console.Error.WriteLine($"{local} - Transaction is required");
+                    throw new Exception("Transaction is required.");
+                }
+                await transactionCollection.InsertOneAsync(transaction);
+            } catch(Exception error)
+            {
+                Console.Error.Write($"{local} - Failed trying to create a new transaction: {error}");
                 throw;
             }
         }

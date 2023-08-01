@@ -27,6 +27,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 //const responseJson = await response.json();
                 //console.log("responseJson: ", responseJson);
                 alert("Arquivo enviado e dados salvos com sucesso!");
+                fileInput.value = "";
+                fileNameUploaded.innerText = "Nenhum selecionado...";
                 return;
             } else {
                 alert(`Falha no upload do arquivo: ${response.statusText}`);

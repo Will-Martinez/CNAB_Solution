@@ -74,11 +74,12 @@ public class TransactionsAPI
             }
         });
 
+        // endpoint responsável por deletar uma transação direto da tabela de transações feitas
         endpoint.MapDelete("/api/deleteTransaction/{id}", async context =>
         {
             try
             {
-                var transactionID = context.Request.RouteValues["id"].ToString();
+                var transactionID = context.Request.RouteValues["id"]?.ToString();
                 if (transactionID == null || transactionID == "")
                 {
                     context.Response.StatusCode = 404;
@@ -96,6 +97,7 @@ public class TransactionsAPI
             }
         });
 
+        // endpoint responsável por criar uma única transação sem o uso de arquivo de padrão cnab
         endpoint.MapPost("/api/createTransaction", async context =>
         {
             try
@@ -103,6 +105,25 @@ public class TransactionsAPI
                 using (var reader = new StreamReader(context.Request.Body))
                 {
                     var bodyContent = await reader.ReadToEndAsync();
+                    if (bodyContent == null)
+                    {
+                        context.Response.StatusCode = 404;
+                        Console.Error.WriteLine($"{local} - Body request not founded");
+                        throw new Exception("Body request not founded.");
+                    }
+                    Transaction transaction = JsonSerializer.Deserialize<Transaction>(bodyContent);
+                    if (transaction != null)
+                    {
+                        await TransactionController.CreateTransaction(transaction);
+                        context.Response.StatusCode = 200;
+                        await context.Response.WriteAsJsonAsync("Transaction created");
+                    }
+                    else
+                    {
+                        context.Response.StatusCode = 500;
+                        Console.Error.WriteLine($"{local} - Failed to deserialize Transaction from JSON");
+                        throw new Exception("Failed to deserialize Transaction from JSON.");
+                    }
                 }
             } catch (Exception error)
             {

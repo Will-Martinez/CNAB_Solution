@@ -76,6 +76,23 @@ $(document).ready(async function () {
         store_name_input.val("");
     }
 
+    function ValidateFormInput() {
+        if (
+            transaction_type_input.val() == "" ||
+            transaction_date_input.val() == "" ||
+            amount_input.val() == "" ||
+            cpf_input.val() == "" ||
+            card_number_input.val() == "" ||
+            store_owner_input.val() == "" ||
+            store_name_input.val() == ""
+        ) {
+            alert("Nenhuma informação pode ser cadastrada em branco");
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     async function LoadTable() {
         const detailsModal = $("#detailsModal");
         const transactionsRowData = $("#transactionsTable tbody");
@@ -111,6 +128,8 @@ $(document).ready(async function () {
             await DrawTableData(transactions, transactionTable);
             transactionsRowData.on("click", "button", async function () {
                 const rowData = await transactionTable.row($(this).closest("tr")).data();
+                deleteTransaction.css("display", "block");
+                saveTransaction.css("display", "none");
                 detailsModal.show();
                 InputModalData(rowData);
 
@@ -119,12 +138,13 @@ $(document).ready(async function () {
                     if (confirmTransactionRemove == true) {
                         const removeTransaction = await DeleteTransaction(rowData._id);
                         if (removeTransaction.status == 200) {
-                            ClearModal();
                             detailsModal.hide();
                             window.location.reload();
                         } else {
                             alert("Falha ao tentar deletar a transação da base de dados.");
                         }
+                    } else {
+                        window.location.reload();
                     }
                 });
 
@@ -132,7 +152,7 @@ $(document).ready(async function () {
 
             registerTransaction.on("click", function () {
                 deleteTransaction.css("display", "none");
-                saveTransaction.css("discplay", "block");
+                saveTransaction.css("display", "block");
                 detailsModal.show();
             });
 
@@ -140,7 +160,7 @@ $(document).ready(async function () {
 
                 const newTransaction = new Object();
                
-                newTransaction.transaction_type = transaction_type_input.val();
+                newTransaction.type = transaction_type_input.val();
                 newTransaction.transaction_date = transaction_date_input.val();
                 newTransaction.amount = amount_input.val();
                 newTransaction.cpf = cpf_input.val();
@@ -148,7 +168,17 @@ $(document).ready(async function () {
                 newTransaction.store_owner = store_owner_input.val();
                 newTransaction.store_name = store_name_input.val();
 
-                await CreateTransaction(newTransaction);
+                const formHasEmptyData = ValidateFormInput();
+                if (formHasEmptyData == true) {
+                    return
+                } else {
+                    const response = await CreateTransaction(newTransaction);
+                    if (response.status == 200) {
+                        detailsModal.hide();
+                        alert("Transação cadastrada com sucesso.");
+                    }
+                }
+                window.location.reload();
             });
             closeModal.on("click", function () {
                 ClearModal();
