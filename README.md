@@ -26,7 +26,7 @@ Este é um projeto de aplicação web que visa atender à demanda de realizar o 
 - Com o .NET instalado, abra o terminal do Windows ou Linux e acesse a pasta onde o repositório foi clonado.
 - Execute o comando "dotnet build" seguido por "dotnet run". Em seguida, o terminal imprimirá mensagens como mostrado abaixo:
 
-![image](https://github.com/Will-Martinez/Desafio.net_Wilman_Martinez/assets/110312747/a4c81178-b8cc-4cfa-9388-d94e480ab319)
+![image](./prints/Termianl.PNG)
 
 
 ## Funcionamento da aplicação
@@ -37,9 +37,9 @@ Este é um projeto de aplicação web que visa atender à demanda de realizar o 
     - Rota "transactions": Esta view exibe uma tabela dinâmica contendo todas as transações armazenadas no banco de dados, seja através do formulário de cadastro ou do arquivo cnab.
 - Além disso, há uma terceira rota chamada "home", mas ela é usada apenas para apresentação do autor.
 - 
-![image](https://github.com/Will-Martinez/Desafio.net_Wilman_Martinez/assets/110312747/7f25acdc-c8da-4c44-b1f9-d6fe7afabfbb)
+![image](./prints/Upload_Page.PNG)
 
-![image](https://github.com/Will-Martinez/Desafio.net_Wilman_Martinez/assets/110312747/f4184257-9325-4884-b3d0-7468d94c12f7)
+![image](./prints/Transactions_Page.PNG)
 
 ### Rota "Upload"
 
@@ -59,9 +59,9 @@ Nesta rota, estão disponíveis as seguintes funcionalidades:
     - Paginação: A tabela é paginada, facilitando a navegação entre as transações.
     - Quantidade de Elementos por Página: O usuário pode definir a quantidade de elementos a serem exibidos por página.
 
-![image](https://github.com/Will-Martinez/Desafio.net_Wilman_Martinez/assets/110312747/b647b518-2ec8-454d-9aed-d8e006c9ce3c)
+![image](./prints/Exemplo_Pesquisa.PNG)
 
-![image](https://github.com/Will-Martinez/Desafio.net_Wilman_Martinez/assets/110312747/eb969553-a4df-4dc4-95cf-4b2a253f67a3)
+![image](./prints/Exemplo_Mostra_Dados.PNG)
 
 ### Documentação das API's
 
