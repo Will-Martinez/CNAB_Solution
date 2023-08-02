@@ -84,6 +84,27 @@ $(document).ready(async function () {
         store_name_input.val("");
     }
 
+    // remove os o bloqueio de somente leitura para leitura e escrita nos campos de input do formulário
+    function EnableFormEdit() {
+        transaction_type_input.removeAttr("readonly");
+        transaction_date_input.removeAttr("readonly");
+        amount_input.removeAttr("readonly");
+        cpf_input.removeAttr("readonly");
+        card_number_input.removeAttr("readonly");
+        store_owner_input.removeAttr("readonly");
+        store_name_input.removeAttr("readonly");
+    }
+
+    function BlockFormEdit() {
+        transaction_type_input.attr("readonly", true);
+        transaction_date_input.attr("readonly", true);
+        amount_input.attr("readonly", true);
+        cpf_input.attr("readonly", true);
+        card_number_input.attr("readonly", true);
+        store_owner_input.attr("readonly", true);
+        store_name_input.attr("readonly", true);
+    }
+
     // Função para validar se algum campo do modal está em branco no momento de salvar os mesmos
     function ValidateFormInput() {
         if (
@@ -141,6 +162,7 @@ $(document).ready(async function () {
 
             // evento de click no botão de detalhes para mostrar o modal com os dados dalinha onde foi clicado
             transactionsRowData.on("click", "button", async function () {
+                BlockFormEdit();
                 const rowData = await transactionTable.row($(this).closest("tr")).data();
                 deleteTransaction.css("display", "block");
                 saveTransaction.css("display", "none");
@@ -169,6 +191,7 @@ $(document).ready(async function () {
 
             // evento de click para alterar alguns atributos de botão como mostrar e esconder o botão de salvar
             registerTransaction.on("click", function () {
+                EnableFormEdit();
                 deleteTransaction.css("display", "none");
                 saveTransaction.css("display", "block");
                 detailsModal.show();
