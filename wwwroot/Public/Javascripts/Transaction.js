@@ -163,6 +163,7 @@ $(document).ready(async function () {
             // evento de click no botão de detalhes para mostrar o modal com os dados dalinha onde foi clicado
             transactionsRowData.on("click", "button", async function () {
                 BlockFormEdit();
+                transaction_date_input.prop("type", "text");
                 const rowData = await transactionTable.row($(this).closest("tr")).data();
                 deleteTransaction.css("display", "block");
                 saveTransaction.css("display", "none");
@@ -219,6 +220,7 @@ $(document).ready(async function () {
                     if (response.status == 200) {
                         detailsModal.hide();
                         alert("Transação cadastrada com sucesso.");
+                        window.location.reload();
                     }
                 }
                 window.location.reload();
